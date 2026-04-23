@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>UNACF – Uganda North American Christian Fellowship</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --gold:#C9A84C;
+    --gold-light:#E8C97A;
+    --gold-pale:#F5EDD8;
+    --deep:#0E1A2B;
+    --deep2:#162338;
+    --deep3:#1E3050;
+    --cream:#FAF7F2;
+    --text:#1A1A1A;
+    --muted:#5A5A5A;
+    --border:rgba(201,168,76,0.25);
+  }
+  body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(14,26,43,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:68px}
+  .nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .nav-logo{width:42px;height:42px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:13px;color:var(--deep);letter-spacing:0.5px}
+  .nav-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:#fff;line-height:1.2}
+  .nav-name span{display:block;font-size:0.65rem;font-family:'Outfit',sans-serif;font-weight:300;color:var(--gold-light);letter-spacing:2px;text-transform:uppercase}
+  .nav-links{display:flex;align-items:center;gap:2rem}
+  .nav-links a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:0.85rem;font-weight:400;letter-spacing:0.5px;transition:color 0.2s;cursor:pointer}
+  .nav-links a:hover,.nav-links a.active{color:var(--gold-light)}
+  .nav-cta{background:var(--gold);color:var(--deep)!important;padding:8px 20px;border-radius:4px;font-weight:500!important;transition:background 0.2s!important}
+  .nav-cta:hover{background:var(--gold-light)!important}
+
+  /* PAGES */
+  .page{display:none;padding-top:68px;min-height:100vh}
+  .page.active{display:block}
+
+  /* HERO */
+  .hero{position:relative;min-height:92vh;display:flex;align-items:center;overflow:hidden;background:var(--deep)}
+  .hero-bg{position:absolute;inset:0;background:
+    radial-gradient(ellipse 80% 60% at 70% 50%, rgba(201,168,76,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 80% at 20% 80%, rgba(30,48,80,0.8) 0%, transparent 60%),
+    linear-gradient(135deg, #0E1A2B 0%, #162338 50%, #1E3050 100%)}
+  .hero-pattern{position:absolute;inset:0;opacity:0.04;background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(201,168,76,1) 39px,rgba(201,168,76,1) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(201,168,76,1) 39px,rgba(201,168,76,1) 40px)}
+  .hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:4rem 2rem}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.35);border-radius:100px;padding:6px 16px;margin-bottom:2rem}
+  .hero-badge span{font-size:0.75rem;font-weight:500;color:var(--gold-light);letter-spacing:2px;text-transform:uppercase}
+  .hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,6vw,5.2rem);font-weight:600;color:#fff;line-height:1.1;max-width:780px;margin-bottom:1.5rem}
+  .hero h1 em{color:var(--gold-light);font-style:italic}
+  .hero p{font-size:1.1rem;color:rgba(255,255,255,0.65);max-width:560px;line-height:1.75;margin-bottom:2.5rem;font-weight:300}
+  .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+  .btn-primary{background:var(--gold);color:var(--deep);padding:14px 32px;border-radius:4px;font-weight:500;font-size:0.9rem;cursor:pointer;border:none;transition:all 0.2s;letter-spacing:0.3px}
+  .btn-primary:hover{background:var(--gold-light);transform:translateY(-1px)}
+  .btn-outline{background:transparent;color:#fff;padding:13px 32px;border-radius:4px;font-weight:400;font-size:0.9rem;cursor:pointer;border:1px solid rgba(255,255,255,0.3);transition:all 0.2s;letter-spacing:0.3px}
+  .btn-outline:hover{border-color:var(--gold);color:var(--gold-light)}
+  .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:480px;margin-top:4rem;background:rgba(201,168,76,0.15);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+  .hero-stat{padding:1.25rem 1.5rem;background:rgba(14,26,43,0.5)}
+  .hero-stat strong{display:block;font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--gold-light);font-weight:600}
+  .hero-stat span{font-size:0.75rem;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase}
+
+  /* SECTIONS */
+  .section{padding:5rem 2rem}
+  .container{max-width:1200px;margin:0 auto}
+  .section-label{font-size:0.72rem;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem}
+  .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:600;color:var(--deep);line-height:1.2;margin-bottom:1.25rem}
+  .section-lead{font-size:1.05rem;color:var(--muted);line-height:1.8;max-width:640px;font-weight:300}
+
+  /* VISION / MISSION cards */
+  .vm-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:3rem}
+  .vm-card{border-radius:8px;padding:2.5rem;position:relative;overflow:hidden}
+  .vm-card.vision{background:var(--deep);color:#fff}
+  .vm-card.mission{background:var(--gold-pale);border:1px solid var(--border)}
+  .vm-card-icon{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;font-size:1.3rem}
+  .vm-card.vision .vm-card-icon{background:rgba(201,168,76,0.2)}
+  .vm-card.mission .vm-card-icon{background:rgba(14,26,43,0.1)}
+  .vm-card h3{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;margin-bottom:1rem}
+  .vm-card.vision h3{color:var(--gold-light)}
+  .vm-card.mission h3{color:var(--deep)}
+  .vm-card p{line-height:1.8;font-weight:300}
+  .vm-card.vision p{color:rgba(255,255,255,0.75)}
+  .vm-card.mission p{color:#3a3a3a}
+  .vm-card-accent{position:absolute;bottom:-20px;right:-20px;width:100px;height:100px;border-radius:50%;opacity:0.08}
+  .vm-card.vision .vm-card-accent{background:var(--gold)}
+  .vm-card.mission .vm-card-accent{background:var(--deep)}
+
+  /* VALUES strip */
+  .values-strip{background:var(--deep);padding:3rem 2rem}
+  .values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:rgba(201,168,76,0.15)}
+  .value-item{background:var(--deep2);padding:1.75rem 1.5rem;text-align:center}
+  .value-item .v-icon{font-size:1.5rem;margin-bottom:0.75rem}
+  .value-item h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold-light);font-weight:600;margin-bottom:0.4rem}
+  .value-item p{font-size:0.8rem;color:rgba(255,255,255,0.45);line-height:1.5;font-weight:300}
+
+  /* GOALS */
+  .goals-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem;margin-top:3rem}
+  .goal-card{background:#fff;border:1px solid rgba(0,0,0,0.07);border-radius:8px;padding:2rem;border-left:4px solid var(--gold);transition:box-shadow 0.2s}
+  .goal-card:hover{box-shadow:0 8px 32px rgba(0,0,0,0.08)}
+  .goal-letter{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;background:var(--gold-pale);border-radius:50%;font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;color:var(--deep);margin-bottom:1rem}
+  .goal-card h3{font-size:1rem;font-weight:600;color:var(--deep);margin-bottom:0.75rem}
+  .goal-card ul{list-style:none;padding:0}
+  .goal-card ul li{font-size:0.85rem;color:var(--muted);padding:4px 0 4px 16px;position:relative;line-height:1.5;font-weight:300}
+  .goal-card ul li::before{content:'';position:absolute;left:0;top:12px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+
+  /* STRATEGIC PLAN */
+  .strat-header{background:linear-gradient(135deg, var(--deep) 0%, var(--deep3) 100%);padding:5rem 2rem;text-align:center;position:relative;overflow:hidden}
+  .strat-header::before{content:'';position:absolute;inset:0;opacity:0.03;background-image:repeating-linear-gradient(45deg,rgba(201,168,76,1) 0px,rgba(201,168,76,1) 1px,transparent 1px,transparent 40px)}
+  .strat-header .section-title{color:#fff}
+  .strat-header .section-lead{color:rgba(255,255,255,0.6);margin:0 auto}
+
+  .pillars-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-top:3rem}
+  .pillar{background:#fff;border-radius:8px;padding:1.75rem;border-top:4px solid var(--gold);text-align:center;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+  .pillar-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:700;color:var(--gold-pale);margin-bottom:0.25rem;line-height:1}
+  .pillar h4{font-size:0.9rem;font-weight:600;color:var(--deep);margin-bottom:0.5rem}
+  .pillar p{font-size:0.8rem;color:var(--muted);line-height:1.6;font-weight:300}
+
+  .timeline{position:relative;margin-top:4rem;padding-left:2rem}
+  .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom, var(--gold), rgba(201,168,76,0.1))}
+  .tl-item{position:relative;padding:0 0 3rem 2.5rem}
+  .tl-dot{position:absolute;left:-2rem;top:4px;width:14px;height:14px;border-radius:50%;background:var(--gold);border:3px solid var(--cream)}
+  .tl-year{font-size:0.72rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem}
+  .tl-item h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--deep);margin-bottom:0.75rem}
+  .tl-item p{font-size:0.9rem;color:var(--muted);line-height:1.7;font-weight:300}
+  .tl-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:0.75rem}
+  .tl-tag{font-size:0.72rem;background:var(--gold-pale);color:var(--deep);padding:3px 10px;border-radius:100px;font-weight:500}
+
+  /* FLAGSHIP EVENT */
+  .event-hero{background:var(--deep);padding:5rem 2rem;position:relative;overflow:hidden}
+  .event-hero::after{content:'NOV 6–8, 2026';position:absolute;right:-2rem;top:50%;transform:translateY(-50%) rotate(90deg);font-family:'Cormorant Garamond',serif;font-size:5rem;font-weight:700;color:rgba(201,168,76,0.04);letter-spacing:4px;white-space:nowrap}
+  .event-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+  .event-days{display:grid;gap:1rem;margin-top:3rem}
+  .day-card{background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);border-radius:6px;padding:1.25rem 1.5rem;display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start}
+  .day-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold);line-height:1}
+  .day-info h4{font-size:0.9rem;font-weight:600;color:#fff;margin-bottom:0.3rem}
+  .day-info p{font-size:0.8rem;color:rgba(255,255,255,0.5);line-height:1.5;font-weight:300}
+  .day-theme{font-size:0.7rem;font-style:italic;color:var(--gold-light);opacity:0.8;margin-top:0.25rem}
+
+  /* BUDGET */
+  .budget-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-top:2rem}
+  .budget-item{background:#fff;border:1px solid rgba(0,0,0,0.07);border-radius:6px;padding:1.25rem;text-align:center}
+  .budget-item .b-amount{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--deep);margin-bottom:0.25rem}
+  .budget-item .b-label{font-size:0.75rem;color:var(--muted);font-weight:300}
+  .budget-total{background:var(--deep);color:#fff;border-radius:6px;padding:1.5rem;text-align:center;margin-top:1rem}
+  .budget-total strong{font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--gold-light);display:block;margin-bottom:0.25rem}
+  .budget-total span{font-size:0.8rem;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase}
+
+  /* SPONSORS */
+  .sponsors{margin-top:3rem}
+  .sponsor-tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}
+  .sponsor-tier{border-radius:6px;padding:1.25rem;text-align:center}
+  .sponsor-tier.platinum{background:linear-gradient(135deg,#2a2a2a,#1a1a1a);color:#fff;border:1px solid rgba(255,255,255,0.1)}
+  .sponsor-tier.gold{background:linear-gradient(135deg,var(--deep),var(--deep2));color:#fff;border:1px solid var(--border)}
+  .sponsor-tier.silver{background:var(--cream);border:1px solid rgba(0,0,0,0.1)}
+  .sponsor-tier.bronze{background:#fff;border:1px solid rgba(0,0,0,0.07)}
+  .sponsor-tier .t-amount{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;margin-bottom:0.25rem}
+  .sponsor-tier.platinum .t-amount,.sponsor-tier.gold .t-amount{color:var(--gold-light)}
+  .sponsor-tier.silver .t-amount,.sponsor-tier.bronze .t-amount{color:var(--deep)}
+  .sponsor-tier .t-name{font-size:0.8rem;font-weight:600;margin-bottom:0.4rem;letter-spacing:1px;text-transform:uppercase}
+  .sponsor-tier .t-perk{font-size:0.75rem;opacity:0.65;font-weight:300}
+
+  /* FOOTER */
+  footer{background:var(--deep);padding:3rem 2rem 2rem;border-top:1px solid var(--border)}
+  .footer-inner{max-width:1200px;margin:0 auto}
+  .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2rem}
+  .footer-brand h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#fff;margin-bottom:0.5rem}
+  .footer-brand p{font-size:0.85rem;color:rgba(255,255,255,0.4);line-height:1.7;font-weight:300}
+  .footer-tagline{font-style:italic;font-size:0.9rem;color:var(--gold-light);margin-top:0.75rem;font-family:'Cormorant Garamond',serif}
+  .footer-col h4{font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+  .footer-col a{display:block;font-size:0.85rem;color:rgba(255,255,255,0.45);text-decoration:none;margin-bottom:0.5rem;cursor:pointer;transition:color 0.2s;font-weight:300}
+  .footer-col a:hover{color:var(--gold-light)}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,0.07);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center}
+  .footer-bottom p{font-size:0.8rem;color:rgba(255,255,255,0.25);font-weight:300}
+  .footer-motto{font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:var(--gold);font-style:italic}
+
+  /* ABOUT PAGE extras */
+  .quote-block{background:var(--deep);border-left:4px solid var(--gold);padding:2rem 2.5rem;margin:2rem 0;border-radius:0 8px 8px 0}
+  .quote-block p{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:#fff;font-style:italic;line-height:1.6}
+  .quote-block cite{display:block;margin-top:0.75rem;font-size:0.8rem;color:var(--gold-light);font-family:'Outfit',sans-serif;font-style:normal;letter-spacing:1px;text-transform:uppercase}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+
+  /* GOVERNANCE */
+  .council-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-top:2rem}
+  .council-item{background:#fff;border:1px solid rgba(0,0,0,0.07);border-radius:8px;padding:1.5rem;text-align:center}
+  .council-num{width:48px;height:48px;border-radius:50%;background:var(--deep);color:var(--gold-light);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;margin:0 auto 0.75rem}
+  .council-item h4{font-size:0.85rem;font-weight:500;color:var(--deep)}
+  .council-item p{font-size:0.75rem;color:var(--muted);font-weight:300;margin-top:0.25rem}
+
+  @media(max-width:768px){
+    .nav-links{display:none}
+    .vm-grid,.event-grid,.about-grid,.footer-top{grid-template-columns:1fr}
+    .hero h1{font-size:2.4rem}
+    .hero-stats{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="#" onclick="showPage('home')">
+      <div class="nav-logo">UNACF</div>
+      <div class="nav-name">Uganda North American Christian Fellowship<span>Est. 2026 · DMV & Beyond</span></div>
+    </a>
+    <div class="nav-links">
+      <a onclick="showPage('home')" id="nav-home" class="active">Home</a>
+      <a onclick="showPage('about')" id="nav-about">About</a>
+      <a onclick="showPage('goals')" id="nav-goals">Goals & Objectives</a>
+      <a onclick="showPage('strategic')" id="nav-strategic">Strategic Plan</a>
+      <a onclick="showPage('event')" id="nav-event">Convention 2026</a>
+      <a onclick="showPage('join')" id="nav-join" class="nav-cta">Join Us</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ======== HOME PAGE ======== -->
+<div id="page-home" class="page active">
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-pattern"></div>
+    <div class="hero-content">
+      <div class="hero-badge"><span>Uganda North American Christian Fellowship</span></div>
+      <h1>United in Faith,<br/><em>Strengthened</em> for Kingdom Impact</h1>
+      <p>A national alliance of Ugandan Christian leaders, pastors, and ministries across North America — advancing God's Kingdom through unity, collaboration, and servant leadership.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="showPage('about')">Discover Our Story</button>
+        <button class="btn-outline" onclick="showPage('event')">2026 National Convention →</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><strong>National</strong><span>Reach</span></div>
+        <div class="hero-stat"><strong>12</strong><span>Servant Leaders</span></div>
+        <div class="hero-stat"><strong>One</strong><span>Purpose</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="values-strip">
+    <div class="container">
+      <div class="values-grid">
+        <div class="value-item"><div class="v-icon">✝</div><h4>Christ-Centered</h4><p>All leadership flows from and returns to Christ</p></div>
+        <div class="value-item"><div class="v-icon">🤝</div><h4>Unity in Diversity</h4><p>One mission, many expressions of faith</p></div>
+        <div class="value-item"><div class="v-icon">🕊</div><h4>Servant Leadership</h4><p>We lead by serving one another in love</p></div>
+        <div class="value-item"><div class="v-icon">🌍</div><h4>Diaspora Community</h4><p>Honoring our heritage, building our future</p></div>
+        <div class="value-item"><div class="v-icon">🔥</div><h4>Gospel Advancement</h4><p>Evangelism, discipleship, and spiritual renewal</p></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section" style="background:var(--cream)">
+    <div class="container">
+      <p class="section-label">Our Foundation</p>
+      <h2 class="section-title">Vision & Mission</h2>
+      <p class="section-lead">UNACF is not a denomination — it is a relational network of co-laborers in Christ, committed to advancing God's Kingdom through shared purpose and mutual support.</p>
+      <div class="vm-grid">
+        <div class="vm-card vision">
+          <div class="vm-card-icon">👁</div>
+          <h3>Our Vision</h3>
+          <p>To cultivate a united, empowered, and spiritually vibrant community of Ugandan Christian leaders across North America who work together to strengthen churches and impact society for the Kingdom of God.</p>
+          <div class="vm-card-accent"></div>
+        </div>
+        <div class="vm-card mission">
+          <div class="vm-card-icon">🎯</div>
+          <h3>Our Mission</h3>
+          <p>To unite, equip, and support pastors and Christian leaders through fellowship and relationship building, prayer and spiritual alignment, leadership development and mentorship, and collaborative service and community outreach.</p>
+          <div class="vm-card-accent"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:#fff">
+    <div class="container">
+      <p class="section-label">What We Do</p>
+      <h2 class="section-title">Seven Core Goals</h2>
+      <p class="section-lead">From spiritual unity to gospel advancement, every pillar of UNACF is designed to strengthen the body of Christ across North America.</p>
+      <div class="goals-grid">
+        <div class="goal-card"><div class="goal-letter">A</div><h3>Spiritual Unity & Fellowship</h3><ul><li>Regular fellowship gatherings for prayer</li><li>Building strong relationships among leaders</li><li>Encouraging reconciliation and mutual honor</li></ul></div>
+        <div class="goal-card"><div class="goal-letter">B</div><h3>Pastoral Support & Care</h3><ul><li>Pastoral care systems for leaders in crisis</li><li>Counseling, mentorship, and restoration</li><li>Safe spaces for accountability</li></ul></div>
+        <div class="goal-card"><div class="goal-letter">C</div><h3>Leadership Development</h3><ul><li>Leadership training programs & workshops</li><li>Mentorship networks for emerging leaders</li><li>Next-generation Christian leadership</li></ul></div>
+        <div class="goal-card"><div class="goal-letter">D</div><h3>Collaborative Ministry</h3><ul><li>Joint programs and ministry initiatives</li><li>Resource and knowledge sharing</li><li>Support for church planting</li></ul></div>
+        <div class="goal-card"><div class="goal-letter">E</div><h3>Community & Diaspora</h3><ul><li>Support for immigrants, families, students</li><li>Humanitarian and outreach initiatives</li><li>Faith-based community development</li></ul></div>
+        <div class="goal-card"><div class="goal-letter">F</div><h3>National Coordination</h3><ul><li>Represent leaders at national forums</li><li>Engage with Ugandan Embassy</li><li>Regional and state chapters</li></ul></div>
+        <div class="goal-card"><div class="goal-letter">G</div><h3>Advancement of the Gospel</h3><ul><li>Promote evangelism and discipleship</li><li>Support missions and outreach programs</li><li>Encourage prayer movements and revival</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--deep);text-align:center">
+    <div class="container">
+      <p class="section-label" style="color:var(--gold-light)">Flagship Event</p>
+      <h2 class="section-title" style="color:#fff">Annual National Convention</h2>
+      <p class="section-lead" style="color:rgba(255,255,255,0.55);margin:0 auto 2rem">Join us November 6–8, 2026 in the DMV area for three days of worship, leadership, and fellowship that will define the future of UNACF.</p>
+      <button class="btn-primary" onclick="showPage('event')">View Full Programme →</button>
+    </div>
+  </section>
+
+</div>
+
+<!-- ======== ABOUT PAGE ======== -->
+<div id="page-about" class="page">
+  <section style="background:var(--deep);padding:5rem 2rem">
+    <div class="container">
+      <p class="section-label" style="color:var(--gold-light)">Who We Are</p>
+      <h2 class="section-title" style="color:#fff">About UNACF</h2>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="about-grid">
+        <div>
+          <p class="section-label">Our Identity</p>
+          <h2 class="section-title">A Fellowship, Not a Denomination</h2>
+          <p style="color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:1.5rem">The Uganda North American Christian Fellowship (UNACF) is envisioned as a national, Christian-based leadership alliance that unites Ugandan Christian leaders, pastors, and ministries across North America. It builds upon the foundational vision of the DMV pastoral fellowship, expanding into a broader platform for unity, collaboration, leadership development, and community impact.</p>
+          <p style="color:var(--muted);line-height:1.8;font-weight:300">UNACF is not a governing authority over churches, but a relational network of co-laborers in Christ, committed to advancing God's Kingdom through shared purpose and mutual support — reflecting the biblical model of <em>unity without uniformity</em>.</p>
+        </div>
+        <div>
+          <div class="quote-block">
+            <p>"One Faith. One People. One Voice in Christ."</p>
+            <cite>UNACF Founding Declaration</cite>
+          </div>
+          <div class="quote-block" style="margin-top:1rem">
+            <p>"Strength in Unity, Power in Christ."</p>
+            <cite>UNACF Core Motto</cite>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:#fff">
+    <div class="container">
+      <p class="section-label">Governance</p>
+      <h2 class="section-title">The Servant Leadership Team</h2>
+      <p class="section-lead">UNACF is governed by a Council of Twelve (12) Servant Leaders — reflecting the biblical model of shared responsibility, not hierarchy.</p>
+      <div style="background:var(--gold-pale);border:1px solid var(--border);border-radius:8px;padding:2rem;margin:2rem 0">
+        <p style="font-size:0.95rem;color:var(--deep);line-height:1.8;font-weight:300">The number twelve is intentional. In the Bible, twelve often represents unity, shared responsibility, and God's people working together — as with the twelve tribes of Israel and the twelve apostles. In UNACF, no leader is above another. All leaders serve side by side under the leadership of Christ.</p>
+      </div>
+      <div class="council-grid">
+        <div class="council-item"><div class="council-num">SLT</div><h4>Servant Leadership Team</h4><p>12 servant leaders governing as a council</p></div>
+        <div class="council-item"><div class="council-num">&#9632;</div><h4>Spiritual Direction</h4><p>Vision alignment & fellowship activities</p></div>
+        <div class="council-item"><div class="council-num">&#9632;</div><h4>National Initiatives</h4><p>Coordinating programs across all regions</p></div>
+        <div class="council-item"><div class="council-num">&#9632;</div><h4>Accountability</h4><p>Mutual honor & transparent governance</p></div>
+        <div class="council-item"><div class="council-num">&#9632;</div><h4>Regional Chapters</h4><p>East Coast, Midwest, South, West Coast</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="section-label">Statement of Faith</p>
+      <h2 class="section-title">Our Doctrinal Foundation</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:2rem">
+        <div class="goal-card"><h3 style="margin-bottom:0.5rem">The Holy Scriptures</h3><p style="font-size:0.85rem;color:var(--muted);font-weight:300">The Bible as the inspired, authoritative Word of God</p></div>
+        <div class="goal-card"><h3 style="margin-bottom:0.5rem">The Triune God</h3><p style="font-size:0.85rem;color:var(--muted);font-weight:300">Father, Son, and Holy Spirit — one God in three persons</p></div>
+        <div class="goal-card"><h3 style="margin-bottom:0.5rem">Salvation by Grace</h3><p style="font-size:0.85rem;color:var(--muted);font-weight:300">Through faith in Jesus Christ alone</p></div>
+        <div class="goal-card"><h3 style="margin-bottom:0.5rem">The Holy Spirit</h3><p style="font-size:0.85rem;color:var(--muted);font-weight:300">Active presence, gifts, and power for ministry</p></div>
+        <div class="goal-card"><h3 style="margin-bottom:0.5rem">Unity of Believers</h3><p style="font-size:0.85rem;color:var(--muted);font-weight:300">Across denominations in shared essentials</p></div>
+        <div class="goal-card"><h3 style="margin-bottom:0.5rem">The Return of Christ</h3><p style="font-size:0.85rem;color:var(--muted);font-weight:300">The blessed hope of the Church</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======== GOALS & OBJECTIVES PAGE ======== -->
+<div id="page-goals" class="page">
+  <section style="background:var(--deep);padding:5rem 2rem">
+    <div class="container">
+      <p class="section-label" style="color:var(--gold-light)">Our Direction</p>
+      <h2 class="section-title" style="color:#fff">Goals & Objectives</h2>
+      <p style="color:rgba(255,255,255,0.55);max-width:640px;line-height:1.8;font-weight:300;margin-top:1rem">Seven strategic goals form the backbone of UNACF's work — each grounded in scripture and oriented toward Kingdom impact across North America.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div style="display:grid;gap:2.5rem">
+
+        <div style="background:#fff;border-radius:8px;overflow:hidden;border:1px solid rgba(0,0,0,0.07)">
+          <div style="background:var(--deep);padding:1.5rem 2rem;display:flex;align-items:center;gap:1rem">
+            <span style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold)">A</span>
+            <h3 style="color:#fff;font-size:1.1rem;font-weight:500">Spiritual Unity & Fellowship</h3>
+          </div>
+          <div style="padding:1.75rem 2rem">
+            <p style="color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:1.25rem">The primary goal of UNACF is to foster genuine unity among pastors and ministries while respecting denominational diversity. This reflects the biblical model of <em>unity without uniformity</em>, where diversity is embraced but mission remains shared.</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem">
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Promote regular fellowship gatherings for prayer and encouragement</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Build strong relationships among leaders</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Encourage reconciliation, trust, and mutual honor</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Strengthen the collective voice of the Church</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border-radius:8px;overflow:hidden;border:1px solid rgba(0,0,0,0.07)">
+          <div style="background:var(--deep2);padding:1.5rem 2rem;display:flex;align-items:center;gap:1rem">
+            <span style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold)">B</span>
+            <h3 style="color:#fff;font-size:1.1rem;font-weight:500">Pastoral Support & Care</h3>
+          </div>
+          <div style="padding:1.75rem 2rem">
+            <p style="color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:1.25rem">UNACF seeks to ensure that pastors do not walk alone, but are supported spiritually, emotionally, and relationally throughout their ministry journey.</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem">
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Pastoral care systems for leaders in crisis</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Counseling, mentorship, and restoration pathways</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Safe spaces for accountability and encouragement</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Address burnout and ministry challenges</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border-radius:8px;overflow:hidden;border:1px solid rgba(0,0,0,0.07)">
+          <div style="background:var(--deep);padding:1.5rem 2rem;display:flex;align-items:center;gap:1rem">
+            <span style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold)">C</span>
+            <h3 style="color:#fff;font-size:1.1rem;font-weight:500">Leadership Development & Capacity Building</h3>
+          </div>
+          <div style="padding:1.75rem 2rem">
+            <p style="color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:1.25rem">A central goal is to raise strong, effective, and spiritually mature leaders who will carry the Church into its next season of impact.</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem">
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Leadership training programs and workshops</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Mentorship networks for emerging leaders</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Next-generation Christian leadership development</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Knowledge sharing among experienced pastors</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border-radius:8px;overflow:hidden;border:1px solid rgba(0,0,0,0.07)">
+          <div style="background:var(--deep2);padding:1.5rem 2rem;display:flex;align-items:center;gap:1rem">
+            <span style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold)">D</span>
+            <h3 style="color:#fff;font-size:1.1rem;font-weight:500">Collaborative Ministry & Resource Sharing</h3>
+          </div>
+          <div style="padding:1.75rem 2rem">
+            <p style="color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:1.25rem">UNACF promotes partnership over competition among ministries — believing that together we accomplish more for the Kingdom.</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem">
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Joint programs and ministry initiatives</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Share resources, knowledge, and best practices</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Support church planting and ministry expansion</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Strengthen collective impact through collaboration</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border-radius:8px;overflow:hidden;border:1px solid rgba(0,0,0,0.07)">
+          <div style="background:var(--deep);padding:1.5rem 2rem;display:flex;align-items:center;gap:1rem">
+            <span style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold)">E</span>
+            <h3 style="color:#fff;font-size:1.1rem;font-weight:500">Community Engagement & Diaspora Support</h3>
+          </div>
+          <div style="padding:1.75rem 2rem">
+            <p style="color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:1.25rem">The Fellowship serves both the Ugandan diaspora and broader communities, meeting practical needs and fostering spiritual belonging.</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem">
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Support immigrants, families, and students</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Mentorship and social support systems</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Humanitarian and outreach initiatives</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Faith-based community development</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border-radius:8px;overflow:hidden;border:1px solid rgba(0,0,0,0.07)">
+          <div style="background:var(--deep2);padding:1.5rem 2rem;display:flex;align-items:center;gap:1rem">
+            <span style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold)">F</span>
+            <h3 style="color:#fff;font-size:1.1rem;font-weight:500">National Coordination & Representation</h3>
+          </div>
+          <div style="padding:1.75rem 2rem">
+            <p style="color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:1.25rem">UNACF provides a unified national platform that gives Ugandan Christian leadership a collective and recognized voice.</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem">
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Represent leaders at national forums</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Engage with the Ugandan Embassy</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Workshops, conferences, and national gatherings</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Establish regional and state chapters</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border-radius:8px;overflow:hidden;border:1px solid rgba(0,0,0,0.07)">
+          <div style="background:var(--deep);padding:1.5rem 2rem;display:flex;align-items:center;gap:1rem">
+            <span style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold)">G</span>
+            <h3 style="color:#fff;font-size:1.1rem;font-weight:500">Advancement of the Gospel</h3>
+          </div>
+          <div style="padding:1.75rem 2rem">
+            <p style="color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:1.25rem">Above all, UNACF exists to advance the mission of Christ — everything we do flows from and returns to this ultimate purpose.</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem">
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Promote evangelism and discipleship</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Support missions and outreach programs</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Encourage prayer movements and spiritual revival</div>
+              <div style="background:var(--gold-pale);border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--deep);font-weight:300">Strengthen the Church's influence in society</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======== STRATEGIC PLAN PAGE ======== -->
+<div id="page-strategic" class="page">
+
+  <div class="strat-header">
+    <div class="container">
+      <p class="section-label" style="color:var(--gold-light)">Roadmap to 2030</p>
+      <h2 class="section-title">Strategic Plan</h2>
+      <p class="section-lead">A phased strategy to build a strong, enduring fellowship that advances the Kingdom of God across North America and beyond.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <p class="section-label">Strategic Pillars</p>
+      <h2 class="section-title">Five Foundations</h2>
+      <div class="pillars-row">
+        <div class="pillar"><div class="pillar-num">01</div><h4>Spiritual Vitality</h4><p>Prayer, revival, and deep spiritual formation at the core of all activities</p></div>
+        <div class="pillar"><div class="pillar-num">02</div><h4>Leadership Excellence</h4><p>Training, mentorship, and capacity building for pastors and emerging leaders</p></div>
+        <div class="pillar"><div class="pillar-num">03</div><h4>National Unity</h4><p>Binding Ugandan Christian leaders across all 50 states into one fellowship</p></div>
+        <div class="pillar"><div class="pillar-num">04</div><h4>Community Impact</h4><p>Diaspora support, outreach, and faith-based community development</p></div>
+        <div class="pillar"><div class="pillar-num">05</div><h4>Institutional Strength</h4><p>Governance, accountability, resources, and sustainable infrastructure</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:#fff">
+    <div class="container">
+      <p class="section-label">Implementation Timeline</p>
+      <h2 class="section-title">Phase-by-Phase Rollout</h2>
+      <div class="timeline" style="margin-top:3rem">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <p class="tl-year">Phase 1 — 2026</p>
+          <h3>Foundation & Launch</h3>
+          <p>Formalize UNACF as a national fellowship. Ratify the founding charter. Convene the Council of Twelve. Host the inaugural Annual National Convention in the DMV area (November 6–8, 2026). Establish national identity and core governance structure.</p>
+          <div class="tl-tags"><span class="tl-tag">Charter Ratification</span><span class="tl-tag">Council of 12</span><span class="tl-tag">Inaugural Convention</span><span class="tl-tag">Brand Identity</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <p class="tl-year">Phase 2 — 2027</p>
+          <h3>Regional Expansion</h3>
+          <p>Establish regional chapters in the East Coast, Midwest, South, and West Coast. Launch Regional Pastoral Empowerment Summits in each region. Begin systematic leadership training programs and pastoral care networks.</p>
+          <div class="tl-tags"><span class="tl-tag">Regional Chapters</span><span class="tl-tag">Pastoral Summits</span><span class="tl-tag">Training Programs</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <p class="tl-year">Phase 3 — 2028</p>
+          <h3>Programme Development</h3>
+          <p>Launch full leadership development curriculum. Establish mentorship networks for emerging pastors. Develop youth and next-generation leadership conferences. Formalize diaspora support systems and community outreach partnerships.</p>
+          <div class="tl-tags"><span class="tl-tag">Curriculum Launch</span><span class="tl-tag">Youth Conferences</span><span class="tl-tag">Diaspora Programs</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <p class="tl-year">Phase 4 — 2029</p>
+          <h3>National Consolidation</h3>
+          <p>Strengthen UNACF's presence at national forums and in engagement with the Ugandan Embassy. Expand partnerships with para-church organizations. Launch national recognition awards program for impactful ministries.</p>
+          <div class="tl-tags"><span class="tl-tag">National Forums</span><span class="tl-tag">Embassy Engagement</span><span class="tl-tag">Awards Program</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <p class="tl-year">Phase 5 — 2030</p>
+          <h3>Maturity & Sustainability</h3>
+          <p>Achieve full organizational sustainability with diversified funding. Review and renew strategic direction. Celebrate five years of national fellowship with a landmark convention. Assess impact across all seven core goal areas.</p>
+          <div class="tl-tags"><span class="tl-tag">5-Year Review</span><span class="tl-tag">Sustainability</span><span class="tl-tag">Impact Assessment</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="section-label">Workshop Tracks</p>
+      <h2 class="section-title">Leadership Development Curriculum</h2>
+      <p class="section-lead">Practical, Spirit-led training designed for pastors and leaders in the diaspora context.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2rem">
+        <div class="goal-card">
+          <h3>Church Leadership & Administration</h3>
+          <ul>
+            <li>Church governance and structure</li>
+            <li>Financial stewardship and accountability</li>
+            <li>Legal compliance for US nonprofit ministries</li>
+            <li>Strategic planning and vision execution</li>
+          </ul>
+        </div>
+        <div class="goal-card">
+          <h3>Spiritual Leadership & Formation</h3>
+          <ul>
+            <li>Developing intimacy with God</li>
+            <li>Prayer and intercession leadership</li>
+            <li>Handling spiritual warfare in ministry</li>
+            <li>Sustaining personal spiritual health</li>
+          </ul>
+        </div>
+        <div class="goal-card">
+          <h3>Preaching, Teaching & Communication</h3>
+          <ul>
+            <li>Effective sermon preparation</li>
+            <li>Prophetic and apostolic ministry balance</li>
+            <li>Teaching diverse congregations</li>
+            <li>Media and digital preaching</li>
+          </ul>
+        </div>
+        <div class="goal-card">
+          <h3>Pastoral Care & Wellness</h3>
+          <ul>
+            <li>Burnout prevention and recovery</li>
+            <li>Mental health and emotional resilience</li>
+            <li>Marriage and family life in ministry</li>
+            <li>Conflict resolution and reconciliation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ======== CONVENTION PAGE ======== -->
+<div id="page-event" class="page">
+
+  <div class="event-hero">
+    <div class="container">
+      <p class="section-label" style="color:var(--gold-light)">Flagship Event</p>
+      <h2 class="section-title" style="color:#fff;margin-bottom:0.5rem">Annual National Convention</h2>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--gold-light);font-style:italic;margin-bottom:2rem">Pastors & Leaders — Our Premier Gathering</p>
+      <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:3rem">
+        <div style="background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:6px;padding:1rem 1.5rem;text-align:center">
+          <strong style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold-light);display:block">Nov 6–8, 2026</strong>
+          <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px">Dates</span>
+        </div>
+        <div style="background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:6px;padding:1rem 1.5rem;text-align:center">
+          <strong style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold-light);display:block">DMV Area, USA</strong>
+          <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px">Location</span>
+        </div>
+        <div style="background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:6px;padding:1rem 1.5rem;text-align:center">
+          <strong style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold-light);display:block">3 Days</strong>
+          <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px">Format</span>
+        </div>
+      </div>
+      <div class="event-days">
+        <div class="day-card">
+          <div class="day-num">1</div>
+          <div class="day-info">
+            <h4>Friday — Night of Glory</h4>
+            <div class="day-theme">Awakening the Altar</div>
+            <p>Worship & prayer · Spiritual impartation · Prophetic ministry</p>
+          </div>
+        </div>
+        <div class="day-card">
+          <div class="day-num">2</div>
+          <div class="day-info">
+            <h4>Saturday — Leadership Summit</h4>
+            <div class="day-theme">Equipping for Impact</div>
+            <p>Workshops · Panel discussions · Networking · Cultural celebration night</p>
+          </div>
+        </div>
+        <div class="day-card">
+          <div class="day-num">3</div>
+          <div class="day-info">
+            <h4>Sunday — The Crowning Gathering</h4>
+            <div class="day-theme">Prayer, Unity & Renewal</div>
+            <p>Prayer breakfast · Closing worship · Awards · Commissioning · Gala dinner</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <p class="section-label">Full Programme</p>
+      <h2 class="section-title">Three Days in Detail</h2>
+      <div style="display:grid;gap:2rem;margin-top:2rem">
+
+        <div style="background:#fff;border-radius:8px;border:1px solid rgba(0,0,0,0.07);overflow:hidden">
+          <div style="background:var(--deep);padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center">
+            <h3 style="color:#fff;font-family:'Cormorant Garamond',serif;font-size:1.3rem">Day 1 — Friday: Night of Glory</h3>
+            <span style="color:var(--gold-light);font-size:0.8rem">November 6, 2026</span>
+          </div>
+          <div style="padding:1.5rem 2rem">
+            <div style="display:grid;gap:0.5rem">
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0;border-bottom:1px solid rgba(0,0,0,0.05)"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">3:00–6:00 PM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">Registration & Welcome Reception</span></div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0;border-bottom:1px solid rgba(0,0,0,0.05)"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">6:00–6:30 PM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">Opening Ceremony & Processional</span></div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0;border-bottom:1px solid rgba(0,0,0,0.05)"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">6:30–7:30 PM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">Worship Experience</span></div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0;border-bottom:1px solid rgba(0,0,0,0.05)"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">7:30–8:00 PM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">Corporate Prayer</span></div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0;border-bottom:1px solid rgba(0,0,0,0.05)"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">8:00–9:00 PM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">Apostolic Charge & Vision Address</span></div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">9:00–10:00 PM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">Prophetic Ministry & Impartation</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border-radius:8px;border:1px solid rgba(0,0,0,0.07);overflow:hidden">
+          <div style="background:var(--deep2);padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center">
+            <h3 style="color:#fff;font-family:'Cormorant Garamond',serif;font-size:1.3rem">Day 2 — Saturday: Leadership Summit</h3>
+            <span style="color:var(--gold-light);font-size:0.8rem">November 7, 2026</span>
+          </div>
+          <div style="padding:1.5rem 2rem">
+            <div style="display:grid;gap:0.5rem">
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0;border-bottom:1px solid rgba(0,0,0,0.05)"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">7:00–8:00 AM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">Intercessory Prayer</span></div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0;border-bottom:1px solid rgba(0,0,0,0.05)"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">8:00–9:00 AM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">Keynote Address</span></div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0;border-bottom:1px solid rgba(0,0,0,0.05)"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">9:00 AM–12:00 PM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">Workshops (Tracks A–D)</span></div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0;border-bottom:1px solid rgba(0,0,0,0.05)"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">12:00–1:00 PM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">Lunch & Networking</span></div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0;border-bottom:1px solid rgba(0,0,0,0.05)"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">1:00–3:00 PM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">Panel Discussions & Presentations</span></div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0;border-bottom:1px solid rgba(0,0,0,0.05)"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">3:00–5:00 PM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">Leadership Forums & Roundtables</span></div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">6:00–9:00 PM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">Cultural & Worship Celebration Night</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border-radius:8px;border:1px solid rgba(0,0,0,0.07);overflow:hidden">
+          <div style="background:var(--deep);padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center">
+            <h3 style="color:#fff;font-family:'Cormorant Garamond',serif;font-size:1.3rem">Day 3 — Sunday: The Crowning Gathering</h3>
+            <span style="color:var(--gold-light);font-size:0.8rem">November 8, 2026</span>
+          </div>
+          <div style="padding:1.5rem 2rem">
+            <div style="display:grid;gap:0.5rem">
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0;border-bottom:1px solid rgba(0,0,0,0.05)"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">7:00–9:00 AM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">National Prayer Breakfast</span></div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0;border-bottom:1px solid rgba(0,0,0,0.05)"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">10:00 AM–1:00 PM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">Closing Worship Service</span></div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0;border-bottom:1px solid rgba(0,0,0,0.05)"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">1:00–2:00 PM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">Awards & Recognition</span></div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0;border-bottom:1px solid rgba(0,0,0,0.05)"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">2:00–3:00 PM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">Commissioning & Sending Forth</span></div>
+              <div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:0.6rem 0"><span style="font-size:0.8rem;color:var(--gold);font-weight:500">6:00–9:00 PM</span><span style="font-size:0.85rem;color:var(--muted);font-weight:300">Closing Dinner & Gala</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:#fff">
+    <div class="container">
+      <p class="section-label">Event Budget & Sponsorship</p>
+      <h2 class="section-title">Financial Framework</h2>
+      <div class="budget-grid">
+        <div class="budget-item"><div class="b-amount">$25,000</div><div class="b-label">Venue & Logistics</div></div>
+        <div class="budget-item"><div class="b-amount">$15,000</div><div class="b-label">Speaker Travel & Accommodation</div></div>
+        <div class="budget-item"><div class="b-amount">$12,000</div><div class="b-label">Meals & Hospitality</div></div>
+        <div class="budget-item"><div class="b-amount">$10,000</div><div class="b-label">Media & Production</div></div>
+        <div class="budget-item"><div class="b-amount">$5,000</div><div class="b-label">Marketing</div></div>
+        <div class="budget-item"><div class="b-amount">$8,000</div><div class="b-label">Administration & Contingency</div></div>
+      </div>
+      <div class="budget-total"><strong>$75,000</strong><span>Total Estimated Budget</span></div>
+
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--deep);margin:3rem 0 1.5rem">Sponsorship Opportunities</h3>
+      <div class="sponsor-tiers">
+        <div class="sponsor-tier platinum"><div class="t-amount">$20,000</div><div class="t-name">Platinum</div><div class="t-perk">Naming rights & keynote branding</div></div>
+        <div class="sponsor-tier gold"><div class="t-amount">$10,000</div><div class="t-name">Gold</div><div class="t-perk">Session sponsorship & branding</div></div>
+        <div class="sponsor-tier silver"><div class="t-amount">$5,000</div><div class="t-name">Silver</div><div class="t-perk">Exhibition booth & recognition</div></div>
+        <div class="sponsor-tier bronze"><div class="t-amount">$2,500</div><div class="t-name">Bronze</div><div class="t-perk">Logo placement</div></div>
+        <div class="sponsor-tier bronze"><div class="t-amount">$1,000</div><div class="t-name">Community Partner</div><div class="t-perk">Acknowledgement & recognition</div></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ======== JOIN PAGE ======== -->
+<div id="page-join" class="page">
+  <section style="background:var(--deep);padding:5rem 2rem">
+    <div class="container" style="text-align:center">
+      <p class="section-label" style="color:var(--gold-light)">Become a Member</p>
+      <h2 class="section-title" style="color:#fff">Join the Fellowship</h2>
+      <p style="color:rgba(255,255,255,0.55);max-width:560px;margin:1rem auto;line-height:1.8;font-weight:300">UNACF is an open, relational network for Ugandan Christian leaders, pastors, and ministries across North America. We welcome all who share our vision of unity, service, and Kingdom advancement.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-bottom:3rem">
+        <div class="goal-card" style="text-align:center;border-left:none;border-top:4px solid var(--gold)">
+          <div style="font-size:2rem;margin-bottom:1rem">🙏</div>
+          <h3>Pastors & Ministers</h3>
+          <p style="font-size:0.85rem;color:var(--muted);font-weight:300;margin-top:0.5rem">Join a council of peer leaders, access mentorship, and participate in national gatherings</p>
+        </div>
+        <div class="goal-card" style="text-align:center;border-left:none;border-top:4px solid var(--gold)">
+          <div style="font-size:2rem;margin-bottom:1rem">⛪</div>
+          <h3>Ministries & Churches</h3>
+          <p style="font-size:0.85rem;color:var(--muted);font-weight:300;margin-top:0.5rem">Partner with other ministries, share resources, and amplify your impact through collaboration</p>
+        </div>
+        <div class="goal-card" style="text-align:center;border-left:none;border-top:4px solid var(--gold)">
+          <div style="font-size:2rem;margin-bottom:1rem">🌍</div>
+          <h3>Diaspora Community</h3>
+          <p style="font-size:0.85rem;color:var(--muted);font-weight:300;margin-top:0.5rem">Connect with a faith community that understands your journey and supports your family</p>
+        </div>
+      </div>
+      <div style="background:var(--gold-pale);border:1px solid var(--border);border-radius:8px;padding:3rem;text-align:center">
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--deep);margin-bottom:1rem">Ready to Join UNACF?</h3>
+        <p style="color:var(--muted);max-width:480px;margin:0 auto 2rem;font-weight:300;line-height:1.7">Connect with our Servant Leadership Team to learn more about membership, fellowship activities, and the upcoming 2026 National Convention.</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+          <button class="btn-primary" onclick="showPage('event')">Register for Convention 2026</button>
+          <button class="btn-outline" style="color:var(--deep);border-color:var(--deep)" onclick="showPage('about')">Learn About Governance</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Uganda North American Christian Fellowship</h3>
+        <p>A national alliance of Ugandan Christian leaders, pastors, and ministries across North America — advancing God's Kingdom through unity, collaboration, and servant leadership.</p>
+        <p class="footer-tagline">"One Faith. One People. One Voice in Christ."</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('about')">About UNACF</a>
+        <a onclick="showPage('goals')">Goals & Objectives</a>
+        <a onclick="showPage('strategic')">Strategic Plan</a>
+        <a onclick="showPage('event')">Convention 2026</a>
+      </div>
+      <div class="footer-col">
+        <h4>Core Values</h4>
+        <a>Christ-Centered Leadership</a>
+        <a>Unity Among Believers</a>
+        <a>Servant Leadership</a>
+        <a>Collaboration Over Competition</a>
+        <a>Integrity & Accountability</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Uganda North American Christian Fellowship (UNACF). All rights reserved.</p>
+      <span class="footer-motto">Strength in Unity, Power in Christ</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  const navEl = document.getElementById('nav-'+id);
+  if(navEl) navEl.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
